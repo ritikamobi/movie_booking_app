@@ -1,0 +1,4 @@
+$(".screen_btn").hide()
+$("#secondary_info").css('display','block')
+$("#screen_id").html('');
+$("#screen_id").html("<%= escape_javascript(render(:partial => 'screen_avl')) %>");

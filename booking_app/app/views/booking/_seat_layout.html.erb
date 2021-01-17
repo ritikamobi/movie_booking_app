@@ -1,0 +1,103 @@
+<div class="card-header">
+	<h3 class="card-title">Select Seats</h3>
+</div>
+<div class="card-body table-responsive p-0">
+	<table border="1" class="table"  >
+		<tbody>
+			<%(1..@max_row).each do |row_count|%>
+				<% seat_row = @layout.select{|lay| lay['seat_row'] == row_count.to_s }  %>
+				<% if seat_row.present? %>
+				  <tr class="align">
+				    <%(1..@max_col).each do |col_count|%>
+				    	<% seat_col = seat_row.select{|lay| lay['seat_col'].to_i == col_count.to_i}.first  %>
+				    	<% if seat_col.present? %>
+				    		<%if seat_col['seat_avl'] == false %>
+				     			<td class= "cur_ptr booked_seat" id= "td_<%=seat_col['id']%>" ><%= seat_col['title']%></br><%= seat_col['seat_cost']%></td>
+				     		<%else%>
+				     			<td class= "cur_ptr" id= "td_<%=seat_col['id']%>" onclick = "book_seat(event, <%=seat_col['id']%>)"><%= seat_col['title']%></br><%= seat_col['seat_cost']%></td>
+				     		<%end%>
+
+				     	<%else%>
+				     		<td class= "cur_ptr"></td>
+				     	<%end%>
+			  		<%end%>
+				  </tr>
+				 <%else%>
+				 	 <tr><td height="20" colspan="<%= @max_col %>"></td></tr>
+				 <%end%>
+			 <%end%>
+		</tbody>
+	</table>
+</div>	
+<!-- ======================================MODAL=====================================================-->
+<div class="modal" id="confirm-modal" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text_align"><b>Click on the confirm button to book your seats</b></p>
+				 <fieldset>
+					<label for="title"> Seat Number: </label>
+					<input name="title" id="title" disabled="disabled" /></br>
+					<label for="screen"> Screen: </label>
+					<input name="screen" id="screen" disabled="disabled" /></br>
+					<label for="price"> Price: </label>
+					<input name="price" id="price" disabled="disabled" />
+					<input type="hidden" name="seat_id" id= "seat_id" value="">
+				</fieldset>
+      </div>
+      <div class="modal-footer mdl_ftr">
+        <button type="button" class="btn btn-primary" id="tiket_confirm" onclick="confirm_booking($('#seat_id').val())">Confirm</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================================================================================================== -->
+
+<script type="text/javascript">
+	function book_seat(event, seat_id) {
+		var screen_movie_id = $( "#screen_movie_id option:selected" ).val()
+		$.ajax({
+			beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+
+			url: '<%= ticket_preview_path%>.js',
+			type: 'POST',
+			data: {seat_id:seat_id,
+						screen_movie_id: screen_movie_id},
+			async: true,
+			success: function (response){
+				$('#confirm-modal').modal('show');
+				$('#seat_id').val(seat_id)
+				$('#title').val(response.title)
+				$('#screen').val(response.screen_id)
+				$('#price').val(response.price)
+			},
+			error: function(xhr, status, text){
+			}
+		});
+	}
+	function confirm_booking(seat_id) {
+		var slot_id = $('select#slot_id option:selected').val();
+		var screen_movie_id = $("#screen_id").find(':selected').data('screen_movie_id')
+		$.ajax({
+			beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+			url: '/confirm_booking',
+			type: 'POST',
+			data: {seat_id:seat_id,
+						slot_id: slot_id,
+						screen_movie_id: screen_movie_id},
+			async: true,
+			success: function (response){
+				$('#confirm-modal').modal('hide');
+				$('#td_'+response.screen_seat_id).css("background-color", "red")
+				alert('Booking has been done successfully! YOu will recieve a mail confirmation')
+			},
+			error: function(xhr, status, text){
+			}
+		});
+	}
+</script>
+

@@ -1,0 +1,56 @@
+<div class="content-wrapper">
+<section class="content-header">
+   <div class="container-fluid">
+   </div>
+</section>
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+            <div class="card">
+               <div class="card-header">
+                  <h3 class="card-title">Booking Report</h3>
+               </div>
+               <%if @items.present?%>
+               <div class="card-body table-responsive p-0">
+                  <table class="table table-hover text-nowrap">
+                     <thead>
+                        <tr>
+                           <th>ID</th>
+                           <th>Movie Name</th>
+                           <th>Movie Date</th>
+                           <th>Seat Number</th>
+                           <th>Screen</th>
+                           <th>Slot</th>
+                           <th>Price</th>
+                           <th>Booking Date</th>
+                           <th>User Email</th>
+                           <th>Status</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                     	<% @items.each do |f| %>
+                        <tr>
+                           <td><%= f.id%></td>
+                           <td><%= f.screen_movie.movie.title%></td>
+                           <td><%= f.screen_movie.on_date%></td>
+                           <td><%= f.screen_seat.title%></td>
+                           <td><%= f.screen_seat.screen.title%></td>
+                           <td><%= f.screen_slot.slot_time%></td>
+                           <td>Rs <%= f.price%></td>
+                           <td><%= format_date_time(f.booking_date)%></td>
+                           <td><%= f.user.email%></td>
+                           <td><%= format_status(f.status)%></td>
+                        </tr>
+                        <% end %>
+                     </tbody>
+                  </table>
+                 <div class="pag_align pull-right"><%= will_paginate @items%></div>
+               </div>
+               <% end %>
+            </div>
+         </div>
+      </div>
+   </div>
+  </section>
+</div>

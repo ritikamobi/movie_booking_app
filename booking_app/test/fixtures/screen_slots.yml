@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  slot_time: MyString
+  screen: one
+
+two:
+  title: MyString
+  slot_time: MyString
+  screen: two

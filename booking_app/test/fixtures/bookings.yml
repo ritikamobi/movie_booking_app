@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  booking_date: 2021-01-17 14:08:53
+  screen_seat: one
+  screen_slot: one
+  screen_movie: one
+  price: 1.5
+  status: false
+
+two:
+  user: two
+  booking_date: 2021-01-17 14:08:53
+  screen_seat: two
+  screen_slot: two
+  screen_movie: two
+  price: 1.5
+  status: false

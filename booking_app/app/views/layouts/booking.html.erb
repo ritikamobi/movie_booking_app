@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Booking | App</title>
+    <!-- Custom styles for this template -->
+    <%= csrf_meta_tags %>
+    <%= yield :style %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'true' %>
+    <%= stylesheet_link_tag 'jquery-ui.css' %>
+
+  </head>
+  <body>
+    <%= render partial: 'layouts/booking_header' %>
+    <%= yield %>
+    <%= render partial: 'layouts/booking_footer' %>
+    <%= yield :script %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'true' %>
+    <%= javascript_include_tag 'jquery-2.0.0.js'%>
+    <%= javascript_include_tag 'jquery-ui.js'%>
+    <%= javascript_include_tag 'bootstrap.min.js'%>
+
+    <script type="text/javascript">
+     $( "#datepicker" ).datepicker({ minDate: 0, maxDate: " +0D", dateFormat: 'yy-mm-dd'});
+
+     
+     function screens_avl() {
+      var movie_id = $('select#movie_id option:selected').val();
+      var on_date = $('#datepicker').val();
+      $.ajax({
+        method: 'GET',
+        url: '<%= screen_avl_path%>.js',
+        data: {"movie_id": movie_id,
+               "on_date": on_date},
+        success: function (res) {
+        },
+         error: function (error) {
+        }
+      });
+      }
+      $( "#screen_id" ).change(function() {
+    var screen_id = $( "#screen_id option:selected" ).val()
+    $.ajax({
+      method: 'GET',
+      url: '<%= time_slot_path%>.js',
+      data: {"screen_id": screen_id},
+      success: function (res) {
+      },
+       error: function (error) {
+      }
+    });
+  });
+
+   function seat_layout(event) {
+      event.preventDefault();
+      var slot_id = $('select#slot_id option:selected').val();
+      var screen_id = $( "#screen_id option:selected" ).val()
+       $.ajax({
+        method: 'GET',
+        url: '<%= seat_layout_path%>.js',
+        data: {"screen_id": screen_id,
+               "slot_id": slot_id},
+        success: function (res) {
+        },
+         error: function (error) {
+        }
+      });
+   }
+   
+    </script>
+  </body>
+</html>
+
+

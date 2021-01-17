@@ -1,0 +1,2 @@
+<%= select_tag "screen_id", options_for_select(@screens.map { |obj| [obj['title'], obj['id'], { 'data-screen_movie_id' => obj['screen_movie_id']}] }), {:prompt => "Select Screen"}%>
+

@@ -1,0 +1,53 @@
+<div class="content-wrapper">
+<section class="content-header">
+   <div class="container-fluid">
+   </div>
+</section>
+<section class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-12">
+          <div class="primary_info">
+            <div class="card">
+               <div class="card-header">
+                  <h3 class="card-title">Select Movie</h3>
+               </div>
+               <%if @movies.present?%>
+                <%= select_tag  'movie_id', options_for_select(@movies), :prompt => "Select Movie", :class => 'form-control', style: 'text-transform: capitalize;'%>
+               <% end %>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                  <h3 class="card-title">Select Date</h3>
+              </div>
+                <div class="card-body table-responsive p-0" style="margin-left: 10px;">
+                  <input type="text" id="datepicker">
+                </div>
+            </div>
+            <button class="btn btn-primary screen_btn" onclick="screens_avl()">Show Screens Available</button>
+          </div>
+          <div id="secondary_info" style= "display: none">
+             <div class="card">
+               <div class="card-header">
+                  <h3 class="card-title">Select Screen Type</h3>
+               </div>
+                 <div class="card-body table-responsive p-0">
+                  <%=select_tag 'screen_id', options_for_select('') , :prompt => "Select SCreen", :class => 'form-control', style: 'text-transform: capitalize;'%>
+               </div>
+              </div>
+              <div class="card">
+               <div class="card-header">
+                  <h3 class="card-title">Select Time Slot</h3>
+               </div>
+               <div class="card-body table-responsive p-0">
+                  <%=select_tag  'slot_id',  options_for_select('') , :prompt => "Select Slot", :class => 'form-control',  style: 'text-transform: capitalize;'%>
+               </div>
+              </div>
+              <div class="card" id="seat_layout"></div>
+              <button class="btn btn-primary seat_layout_btn" onclick="seat_layout(event)">Select Seats</button>
+          </div>
+         </div>
+      </div>
+   </div>
+  </section>
+</div>

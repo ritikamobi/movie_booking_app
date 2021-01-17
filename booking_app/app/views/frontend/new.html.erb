@@ -1,0 +1,19 @@
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column user_entry">
+  <main role="main" class="inner cover">
+    <h1 class="cover-heading">Booking.Co</h1>
+    <p class="lead">Welcome to the Booking.Co. For convient Booking of your favourite movies, sign up and log in NOW!!</p>
+    <p class="lead">
+    	<% unless user_signed_in?%>
+    		<%= link_to "Sign In", user_session_path, :class => 'btn btn-lg btn-secondary', method: :get %>
+    	<%else%>
+    		<%= link_to "Go To Movie Ticket Booking", booking_layout_path	, :class => 'btn btn-lg btn-secondary', method: :get %>
+    	<%end%>
+    </p>
+  </main>
+   <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>By using www.booking.co(our website), you are fully accepting the Privacy Policy governing your access to Booking.Co and provision of services by Booking.Co to you. If you do not accept terms mentioned in the Privacy Policy, you must not share any of your personal information and immediately exit Booking.Co.</p>
+        </div>
+      </footer>
+</div>
+

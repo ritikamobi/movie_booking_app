@@ -1,0 +1,33 @@
+notes
+Cinema #eg Odeon, West Street, Brighton
+  has_many :screens
+  #fields - name, address
+
+Screen #eg Screen 1, Screen 2 etc
+  belongs_to :cinema
+  has_many :seats
+  #fields - name
+
+Seat #A1, A2 etc
+  belongs_to :screen
+  has_many :bookings
+  #fields - number, eg "A2"
+
+Film #eg Jaws
+  has_many :showings
+  #fields - name, length, rating, etc
+
+Showing #Eg Jaws in screen 2 of odeon west street brighton at 9pm on 10/3/2015
+  belongs_to :screen
+  belongs_to :film
+  has_many :bookings
+  #fields: screening_time (datetime)
+
+User #eg Joe Bloggs
+  has_many :bookings
+  #fields - name, address etc  
+
+Booking #eg Joe Bloggs' reservation for seat A2 for Jaws in screen 2 of odeon west street brighton at 9pm on 10/3/2015
+  belongs_to :showing
+  belongs_to :seat
+  belongs_to :user
